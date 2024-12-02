@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'employee_management.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'employee_management',
+        'USER': 'postgres',
+        'PASSWORD': 'senesh@123',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
