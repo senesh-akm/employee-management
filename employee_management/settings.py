@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'emp_management',
 ]
 
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'employee_management.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,7 +78,7 @@ WSGI_APPLICATION = 'employee_management.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'employee_management',
+        'NAME': 'emp_management',
         'USER': 'postgres',
         'PASSWORD': 'senesh@123',
         'HOST': 'localhost',

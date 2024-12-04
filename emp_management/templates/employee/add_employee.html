@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Add Employee</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Personal Information Card -->
+        <h5 class="mt-4">Personal Information</h5>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row p-2">
+                    {% for field in form %}
+                        {% if field.name in personal_fields %}
+                            <div class="mb-3 col-md-6">
+                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label><br>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Professional Information Card -->
+        <h5 class="mt-4">Professional Information</h5>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row p-2">
+                    {% for field in form %}
+                        {% if field.name in professional_fields %}
+                            <div class="mb-3 col-md-6">
+                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label><br>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Login Information Card -->
+        <h5 class="mt-4">Login Information</h5>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row p-2">
+                    {% for field in form %}
+                        {% if field.name in login_fields %}
+                            <div class="mb-3 col-md-6">
+                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label><br>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Financial Information Card -->
+        <h5 class="mt-4">Financial Information</h5>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row p-2">
+                    {% for field in form %}
+                        {% if field.name in financial_fields %}
+                            <div class="mb-3 col-md-6">
+                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label><br>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Education Qualifications -->
+        <h5 class="mt-4">Education</h5>
+        <div class="card mb-4">
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Institute</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{ education_formset.management_form }}
+                        {% for form in education_formset %}
+                            <tr>
+                                <td>{{ form.title }}</td>
+                                <td>{{ form.institute }}</td>
+                                <td>{{ form.start_date }}</td>
+                                <td>{{ form.end_date }}</td>
+                                <td>{{ form.DELETE }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-danger btn-sm add-row">Add Row</button>
+            </div>
+        </div>
+
+        <!-- Work History -->
+        <h5 class="mt-4">Work History</h5>
+        <div class="card mb-4">
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th>Company</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{ workhistory_formset.management_form }}
+                        {% for form in workhistory_formset %}
+                            <tr>
+                                <td>{{ form.position }}</td>
+                                <td>{{ form.company }}</td>
+                                <td>{{ form.start_date }}</td>
+                                <td>{{ form.end_date }}</td>
+                                <td>{{ form.DELETE }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-danger btn-sm add-row">Add Row</button>
+            </div>
+        </div>
+    
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary mb-5">Submit</button>
+    </form>
+
+    <script>
+        document.querySelectorAll('.add-row').forEach(button => {
+            button.addEventListener('click', () => {
+                const table = button.closest('.card-body').querySelector('tbody');
+                const newRow = table.querySelector('tr').cloneNode(true);
+                newRow.querySelectorAll('input').forEach(input => input.value = '');
+                table.appendChild(newRow);
+            });
+        });
+    </script>
+</div>
+{% endblock %}
