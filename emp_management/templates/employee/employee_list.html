@@ -24,7 +24,9 @@
                     <td>{{ employee.job_number }}</td>
                     <td>{{ employee.department }}</td>
                     <td>{{ employee.designation }}</td>
-                    <td>{{ employee.DELETE }}</td>
+                    <td>
+                        <a type="button" href="{% url 'employee_details' employee.id %}" class="btn btn-warning btn-sm float-end">View</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -20,7 +20,7 @@ class Employee(models.Model):
     designation = models.CharField(max_length=100)
     date_of_joining = models.DateField()
     salary = models.DecimalField(max_digits=10, decimal_places=2)
-    skills = models.CharField(max_length=255)
+    skills = models.CharField(max_length=255, null=True, blank=True)
     immediate_supervisor = models.CharField(max_length=255)
 
     # Login Information

@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Employee, Education, WorkHistory
 from .forms import EmployeeForm, EducationForm, WorkHistoryForm
@@ -61,4 +62,51 @@ def employee_list(request):
 
 def employee_details(request, pk):
     employee = get_object_or_404(Employee, pk=pk)
-    return render(request, "employee/employee_details.html", {"employee": employee})
+    educations = employee.educations.all()
+    work_histories = employee.work_histories.all()
+
+    if request.method == "POST":
+        try:
+            employee.dob = datetime.strptime(request.POST.get("dob"), "%Y-%m-%d").date()
+        except (ValueError, TypeError):
+            employee.dob = None  # Handle invalid or blank dates gracefully
+
+        try:
+            employee.date_of_joining = datetime.strptime(request.POST.get("date_of_joining"), "%Y-%m-%d").date()
+        except (ValueError, TypeError):
+            employee.date_of_joining = None
+
+        # Update other fields...
+        employee.title = request.POST.get("title")
+        employee.full_name = request.POST.get("full_name")
+        employee.nic = request.POST.get("nic")
+        employee.address = request.POST.get("address")
+        employee.contact_number = request.POST.get("contact_number")
+        employee.email = request.POST.get("email")
+        employee.emergency_person = request.POST.get("emergency_person")
+        employee.emergency_contact = request.POST.get("emergency_contact")
+        employee.job_number = request.POST.get("job_number")
+        employee.job_title = request.POST.get("job_title")
+        employee.department = request.POST.get("department")
+        employee.designation = request.POST.get("designation")
+        employee.salary = request.POST.get("salary")
+        employee.skills = request.POST.get("skills")
+        employee.immediate_supervisor = request.POST.get("immediate_supervisor")
+        employee.username = request.POST.get("username")
+        employee.password = request.POST.get("password")
+        employee.bank = request.POST.get("bank")
+        employee.account_number = request.POST.get("account_number")
+        employee.account_holder = request.POST.get("account_holder")
+        employee.bank_code = request.POST.get("bank_code")
+        employee.branch_code = request.POST.get("branch_code")
+        employee.swift_code = request.POST.get("swift_code")
+
+        # Save the employee record
+        employee.save()
+        return redirect("employee_list")
+
+    return render(request, "employee/employee_details.html", {
+        "employee": employee,
+        "educations": educations,
+        "work_histories": work_histories
+    })
