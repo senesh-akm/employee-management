@@ -2,38 +2,222 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Employee Details</h2>
-    <table class="table table-striped">
-        <tr>
-            <th>Full Name</th>
-            <td>{{ employee.full_name }}</td>
-        </tr>
-        <tr>
-            <th>Email</th>
-            <td>{{ employee.email }}</td>
-        </tr>
-        <tr>
-            <th>Contact Number</th>
-            <td>{{ employee.contact_number }}</td>
-        </tr>
-        <tr>
-            <th>Job Title</th>
-            <td>{{ employee.job_title }}</td>
-        </tr>
-        <tr>
-            <th>Department</th>
-            <td>{{ employee.department }}</td>
-        </tr>
-        <tr>
-            <th>Salary</th>
-            <td>{{ employee.salary }}</td>
-        </tr>
-        <tr>
-            <th>Date of Joining</th>
-            <td>{{ employee.date_of_joining }}</td>
-        </tr>
-        <!-- Add more fields as required -->
-    </table>
-    <a href="{% url 'employee_list' %}" class="btn btn-secondary">Back to List</a>
+    <h2 class="mb-4">Edit Employee Details</h2>
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        <h6 class="">Personal Information</h6>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" name="title" id="title" class="form-control" value="{{ employee.title }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="full_name" class="form-label">Full Name</label>
+                        <input type="text" name="full_name" id="full_name" class="form-control" value="{{ employee.full_name }}">
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="dob" class="form-label">Date of Birth</label>
+                        <input type="date" name="dob" id="dob" class="form-control" value="{{ employee.dob|date:'Y-m-d' }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nic" class="form-label">National ID</label>
+                        <input type="text" name="nic" id="nic" class="form-control" value="{{ employee.nic }}">
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" name="address" id="address" class="form-control" value="{{ employee.address }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="contact_number" class="form-label">Contact Number</label>
+                        <input type="text" name="contact_number" id="contact_number" class="form-control" value="{{ employee.contact_number }}">
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" value="{{ employee.email }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="emergency_person" class="form-label">Emergency Person</label>
+                        <input type="text" name="emergency_person" id="emergency_person" class="form-control" value="{{ employee.emergency_person }}">
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="emergency_contact" class="form-label">Emergency Contact</label>
+                        <input type="text" name="emergency_contact" id="emergency_contact" class="form-control" value="{{ employee.emergency_contact }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h6 class="mt-5">Professional Information</h6>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="job_number" class="form-label">Job Number</label>
+                        <input type="text" name="job_number" id="job_number" class="form-control" value="{{ employee.job_number }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="job_title" class="form-label">Job Title</label>
+                        <input type="text" name="job_title" id="job_title" class="form-control" value="{{ employee.job_title }}">
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="department" class="form-label">Department</label>
+                        <input type="text" name="department" id="department" class="form-control" value="{{ employee.department }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="designation" class="form-label">Designation</label>
+                        <input type="text" name="designation" id="designation" class="form-control" value="{{ employee.designation }}">
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="date_of_joining" class="form-label">Date of Joining</label>
+                        <input type="date" name="date_of_joining" id="date_of_joining" class="form-control" value="{{ employee.date_of_joining|date:'Y-m-d' }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="salary" class="form-label">Salary</label>
+                        <input type="number" name="salary" id="salary" class="form-control" value="{{ employee.salary }}">
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="skills" class="form-label">Skills</label>
+                        <input type="text" name="skills" id="skills" class="form-control" value="{{ employee.skills }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="immediate_supervisor" class="form-label">Immediate Supervisor</label>
+                        <input type="text" name="immediate_supervisor" id="immediate_supervisor" class="form-control" value="{{ employee.immediate_supervisor }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h6 class="mt-5">Login Information</h6>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" name="username" id="username" class="form-control" value="{{ employee.username }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="text" name="password" id="password" class="form-control" value="{{ employee.password }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h6 class="mt-5">Financial Information</h6>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="bank" class="form-label">Bank</label>
+                        <input type="text" name="bank" id="bank" class="form-control" value="{{ employee.bank }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="account_number" class="form-label">Account Number</label>
+                        <input type="text" name="account_number" id="account_number" class="form-control" value="{{ employee.account_number }}">
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="account_holder" class="form-label">Account Holder</label>
+                        <input type="text" name="account_holder" id="account_holder" class="form-control" value="{{ employee.account_holder }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="bank_code" class="form-label">Bank Code</label>
+                        <input type="text" name="bank_code" id="bank_code" class="form-control" value="{{ employee.bank_code }}">
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="branch_code" class="form-label">Branch Code</label>
+                        <input type="text" name="branch_code" id="branch_code" class="form-control" value="{{ employee.branch_code }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="swift_code" class="form-label">Swift Code</label>
+                        <input type="text" name="swift_code" id="swift_code" class="form-control" value="{{ employee.swift_code }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h6 class="mt-5">Education Qualifications</h6>
+        <div class="card mb-4">
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Institute</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for edu in educations %}
+                        <tr>
+                            <td>{{ edu.title }}</td>
+                            <td>{{ edu.institute }}</td>
+                            <td>{{ edu.start_date }}</td>
+                            <td>{{ edu.end_date }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">No education records available.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h6 class="mt-5">Work History</h6>
+        <div class="card mb-4">
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Position</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for work in work_histories %}
+                        <tr>
+                            <td>{{ work.company }}</td>
+                            <td>{{ work.position }}</td>
+                            <td>{{ work.start_date }}</td>
+                            <td>{{ work.end_date }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">No work history records available.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-4 mb-5">Save Changes</button>
+        <a href="{% url 'employee_list' %}" class="btn btn-secondary mt-4 mb-5">Cancel</a>
+    </form>
 </div>
 {% endblock %}
