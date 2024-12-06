@@ -6,8 +6,10 @@
 
 {% block content %}
     <h2>Employee List</h2>
+
     <a type="button" href="{% url 'add_employee' %}" class="btn btn-primary btn-sm mt-4 mb-3 float-end">+ Add Employee</a>
-    <table class="table table-bordered">
+    
+    <table class="table striped table-hover align-middle">
         <thead>
             <tr>
                 <th style="width: 25%;">Name</th>
