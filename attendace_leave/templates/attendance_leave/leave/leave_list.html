@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Leave List
+{% endblock %}
+
+{% block content %}
+    <h2>Leave List</h2>
+
+    <a type="button" href="{% url 'add_leave' %}" class="btn btn-primary btn-sm mt-4 mb-3 float-end">+ Add Leave</a>
+    
+    <table class="table striped table-hover align-middle">
+        <thead>
+            <tr>
+                <th style="width: 20%;">Employee</th>
+                <th style="width: 15%;">Leave Type</th>
+                <th style="width: 20%;">From</th>
+                <th style="width: 20%;">To</th>
+                <th style="width: 20%;">Status</th>
+                <th style="width: 15%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for leave in leaves %}
+            <tr>
+                <td>{{ leave.employee.full_name }}</td>
+                <td>{{ leave.leave_type }}</td>
+                <td>{{ leave.from_date }}</td>
+                <td>{{ leave.to_date }}</td>
+                <td>{{ leave.approval_status }}</td>
+                <td>
+                    <!-- <a type="button" href="{% url 'employee_details' employee.id %}" class="btn btn-warning btn-sm float-end">View</a> -->
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No leave records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

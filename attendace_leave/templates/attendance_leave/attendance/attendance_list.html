@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Attendace List
+{% endblock %}
+
+{% block content %}
+    <h2 class="">Attendace List</h2>
+
+    <!-- <a type="button" href="{% url 'add_employee' %}" class="btn btn-primary btn-sm mt-4 mb-3 float-end">+ Add Employee</a> -->
+    
+    <table class="table striped table-hover align-middle">
+        <thead>
+            <tr>
+                <th style="width: 15%;">Employee</th>
+                <th style="width: 20%;">Date</th>
+                <th style="width: 20%;">Check-In</th>
+                <th style="width: 20%;">Check-Out</th>
+                <th style="width: 10%;">Status</th>
+                <th style="width: 15%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attendance in attendances %}
+            <tr>
+                <td>{{ attendance.employee.full_name }}</td>
+                <td>{{ attendance.date }}</td>
+                <td>{{ attendance.check_in }}</td>
+                <td>{{ attendance.check_out }}</td>
+                <td>{{ attendance.work_hours }}</td>
+                <td>{{ attendance.overtime }}</td>
+                <td>{{ attendance.status }}</td>
+                <td>
+                    <!-- <a type="button" href="{% url 'employee_details' employee.id %}" class="btn btn-warning btn-sm float-end">View</a> -->
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">No attendance records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
