@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'emp_management',
     'attendace_leave',
+    'payroll_management',
 ]
 
 MIDDLEWARE = [
