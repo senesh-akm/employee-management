@@ -6,6 +6,7 @@
 
 {% block content %}
 <div class="container mt-5">
+    <h2 class="mb-4">Edit Leave Details</h2>
     <form method="POST">
         {% csrf_token %}
         <div class="card mb-4">
@@ -15,15 +16,18 @@
                         <label for="employee" class="form-label">Employee</label>
                         {% if employees.exists %}
                             <select name="employee" id="employee" class="form-control">
-                                <option value="" disabled selected>Select an Employee</option>
+                                <option value="" disabled>Select an Employee</option>
                                 {% for emp in employees %}
-                                <option value="{{ emp.id }}">{{ emp.full_name }}</option>
+                                <option value="{{ emp.id }}" {% if leave.employee.id == emp.id %}selected{% endif %}>
+                                    {{ emp.full_name }}
+                                </option>
                                 {% endfor %}
                             </select>
                         {% else %}
                             <p class="text-danger">No employees available. Please add employees first.</p>
                         {% endif %}
                     </div>
+
                     <div class="col-md-6">
                         <label for="leave_type" class="form-label">Leave Type</label>
                         <select name="leave_type" id="leave_type" class="form-control">
@@ -33,56 +37,59 @@
                         </select>
                     </div>
                 </div>
-        
+    
                 <div class="row mb-3 p-2">
                     <div class="col-md-6">
                         <label for="leave_count" class="form-label">Leave Count</label>
-                        <input type="number" name="leave_count" id="leave_count" class="form-control" value="{{ leave.leave_count }}" >
+                        <input type="number" name="leave_count" id="leave_count" class="form-control" value="{{ leave.leave_count }}">
                     </div>
+
                     <div class="col-md-6">
                         <label for="used_leave" class="form-label">Used Leave</label>
-                        <input type="number" name="used_leave" id="used_leave" class="form-control" value="{{ leave.used_leave }}" >
+                        <input type="number" name="used_leave" id="used_leave" class="form-control" value="{{ leave.used_leave }}">
                     </div>
                 </div>
-        
+
                 <div class="row mb-3 p-2">
                     <div class="col-md-6">
                         <label for="leave_balance" class="form-label">Leave Balance</label>
-                        <input type="number" name="leave_balance" id="leave_balance" class="form-control" value="{{ leave.leave_balance }}" >
+                        <input type="number" name="leave_balance" id="leave_balance" class="form-control" value="{{ leave.leave_balance }}">
                     </div>
+
                     <div class="col-md-6">
                         <label for="from_date" class="form-label">From Date</label>
-                        <input type="date" name="from_date" id="from_date" class="form-control" value="{{ leave.from_date }}" >
+                        <input type="date" name="from_date" id="from_date" class="form-control" value="{{ leave.from_date|date:'Y-m-d' }}">
                     </div>
                 </div>
-        
+
                 <div class="row mb-3 p-2">
                     <div class="col-md-6">
                         <label for="to_date" class="form-label">To Date</label>
-                        <input type="date" name="to_date" id="to_date" class="form-control" value="{{ leave.to_date }}" >
+                        <input type="date" name="to_date" id="to_date" class="form-control" value="{{ leave.to_date|date:'Y-m-d' }}">
                     </div>
+
                     <div class="col-md-6">
                         <label for="approval_status" class="form-label">Approval Status</label>
                         <select name="approval_status" id="approval_status" class="form-control">
-                            <option value="Pending" {% if leave.approval_status == "Pending" or not leave.approval_status %}selected{% endif %}>Pending</option>
+                            <option value="Pending" {% if leave.approval_status == "Pending" %}selected{% endif %}>Pending</option>
                             <option value="Accepted" {% if leave.approval_status == "Accepted" %}selected{% endif %}>Accepted</option>
                             <option value="Rejected" {% if leave.approval_status == "Rejected" %}selected{% endif %}>Rejected</option>
                             <option value="Cancelled" {% if leave.approval_status == "Cancelled" %}selected{% endif %}>Cancelled</option>
                         </select>
                     </div>
                 </div>
-        
+
                 <div class="row mb-3 p-2">
                     <div class="col-md-12">
                         <label for="reason" class="form-label">Reason</label>
-                        <textarea name="reason" id="reason" class="form-control" rows="3" >{{ leave.reason }}</textarea>
+                        <textarea name="reason" id="reason" class="form-control" rows="3">{{ leave.reason }}</textarea>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="d-flex justify-content mt-4">
-            <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="d-flex justify-content mt-4 mb-5">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
             <a href="{% url 'leave_list' %}" class="btn btn-secondary ms-3">Cancel</a>
         </div>
     </form>

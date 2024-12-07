@@ -27,14 +27,24 @@
                 <td>{{ leave.leave_type }}</td>
                 <td>{{ leave.from_date }}</td>
                 <td>{{ leave.to_date }}</td>
-                <td>{{ leave.approval_status }}</td>
                 <td>
-                    <!-- <a type="button" href="{% url 'employee_details' employee.id %}" class="btn btn-warning btn-sm float-end">View</a> -->
+                    {% if leave.approval_status == "Pending" %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                    {% elif leave.approval_status == "Accepted" %}
+                    <span class="badge bg-success">Accepted</span>
+                    {% elif leave.approval_status == "Rejected" %}
+                    <span class="badge bg-danger">Rejected</span>
+                    {% elif leave.approval_status == "Cancelled" %}
+                    <span class="badge bg-orange">Cancelled</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a type="button" href="{% url 'leave_details' leave.id %}" class="btn btn-warning btn-sm float-end">View</a>
                 </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="6" class="text-center">No leave records found.</td>
+                <td colspan="5" class="text-center">No leave records found.</td>
             </tr>
             {% endfor %}
         </tbody>
