@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Salary Processing
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3 p-2">
+                    <!-- Employee Dropdown -->
+                    <div class="col-md-6">
+                        <label for="employee" class="form-label">Employee</label>
+                        {% if employees.exists %}
+                            <select name="employee" id="employee" class="form-control">
+                                <option value="" disabled selected>Select an Employee</option>
+                                {% for emp in employees %}
+                                <option value="{{ emp.id }}">{{ emp.full_name }}</option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <p class="text-danger">No employees available. Please add employees first.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row mb-3 p-2">
+                    <!-- Bank Details -->
+                    <div class="col-md-4">
+                        <label for="bank" class="form-label">Bank</label>
+                        <input type="text" name="bank" id="bank" class="form-control" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="account_number" class="form-label">Account Number</label>
+                        <input type="text" name="account_number" id="account_number" class="form-control" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="account_holder" class="form-label">Account Holder</label>
+                        <input type="text" name="account_holder" id="account_holder" class="form-control" readonly>
+                    </div>
+                </div>
+                
+                <div class="row mb-3 p-2">
+                    <div class="col-md-4">
+                        <label for="bank_code" class="form-label">Bank Code</label>
+                        <input type="text" name="bank_code" id="bank_code" class="form-control" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="branch_code" class="form-label">Branch Code</label>
+                        <input type="text" name="branch_code" id="branch_code" class="form-control" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="swift_code" class="form-label">Swift Code</label>
+                        <input type="text" name="swift_code" id="swift_code" class="form-control" readonly>
+                    </div>
+                </div>
+    
+                <!-- Salary and Deductions -->
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="salary" class="form-label">Salary</label>
+                        <input type="number" step="0.01" name="salary" id="salary" class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="deduction" class="form-label">Deductions</label>
+                        <textarea name="deduction" id="deduction" class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+    
+                <!-- Taxes, No Pay, Days -->
+                <div class="row mb-3 p-2">
+                    <div class="col-md-4">
+                        <label for="taxes" class="form-label">Taxes (%)</label>
+                        <input type="number" step="0.01" name="taxes" id="taxes" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="no_pay" class="form-label">No Pay (30 Days)</label>
+                        <input type="number" step="1" name="no_pay" id="no_pay" class="form-control" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="days" class="form-label">Days</label>
+                        <input type="number" name="days" id="days" class="form-control" value="0">
+                    </div>
+                </div>
+    
+                <!-- Payment and Status -->
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="payment" class="form-label">Payment</label>
+                        <input type="number" step="0.01" name="payment" id="payment" class="form-control" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="status" class="form-label">Status</label>
+                        <select name="status" id="status" class="form-control">
+                            <option value="True">Paid</option>
+                            <option value="False" selected>Not Paid</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Submit and Cancel Buttons -->
+        <div class="d-flex justify-content mt-4 mb-5">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'salary_processing_list' %}" class="btn btn-secondary ms-3">Cancel</a>
+        </div>
+    </form>
+    
+    <script src="{% static 'js/fetch_bank_details.js' %}"></script>
+    <script src="{% static 'js/calculate_payment.js' %}"></script>
+</div>
+{% endblock %}

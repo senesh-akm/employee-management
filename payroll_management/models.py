@@ -9,7 +9,6 @@ class SalaryProcessing(models.Model):
     taxes = models.DecimalField(max_digits=10, decimal_places=2)
     payment = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.BooleanField(default=False)  # Paid (True) or Not Paid (False)
-    bank_details = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="bank_details", null=True, blank=True)
     no_pay = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     days = models.PositiveIntegerField(default=0)
 
