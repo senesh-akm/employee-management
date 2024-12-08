@@ -7,7 +7,7 @@
 {% block content %}
     <h2>Salary Processing List</h2>
 
-    <!-- <a type="button" href="{% url 'add_employee' %}" class="btn btn-primary btn-sm mt-4 mb-3 float-end">+ Add Employee</a> -->
+    <a type="button" href="{% url 'add_salary_processing' %}" class="btn btn-primary btn-sm mt-4 mb-3 float-end">+ Add Salary Processing</a>
     
     <table class="table striped table-hover align-middle">
         <thead>
@@ -24,14 +24,14 @@
                 <td>{{ sp.employee.full_name }}</td>
                 <td>{{ sp.taxes }}</td>
                 <td>
-                    {% if sp.status == "Paid" %}
+                    {% if sp.status %}
                     <span class="badge bg-success">Paid</span>
-                    {% elif sp.status == "Not Paid" %}
+                    {% else %}
                     <span class="badge bg-danger">Not Paid</span>
                     {% endif %}
                 </td>
                 <td>
-                    <!-- <a type="button" href="{% url 'employee_details' employee.id %}" class="btn btn-warning btn-sm float-end">View</a> -->
+                    <a type="button" href="{% url 'salary_details' sp.id %}" class="btn btn-warning btn-sm float-end">View</a>
                 </td>
             </tr>
             {% empty %}
