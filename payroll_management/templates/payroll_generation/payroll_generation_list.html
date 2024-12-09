@@ -24,9 +24,9 @@
                 <td>{{ pg.employee.full_name }}</td>
                 <td>{{ pg.salary_processing }}</td>
                 <td>
-                    {% if pg.issued == "Issued" %}
+                    {% if pg.issued %}
                     <span class="badge bg-success">Issued</span>
-                    {% elif pg.issued == "Not Issued" %}
+                    {% else %}
                     <span class="badge bg-danger">Not Issued</span>
                     {% endif %}
                 </td>

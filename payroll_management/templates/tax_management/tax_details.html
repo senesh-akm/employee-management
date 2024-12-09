@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Tax Record
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Add Tax Record</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <!-- Employee Dropdown -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="employee" class="form-label">Employee</label>
+                        {% if employees.exists %}
+                            <select name="employee" id="employee" class="form-control">
+                                <option value="" disabled selected>Select an Employee</option>
+                                {% for emp in employees %}
+                                    <option value="{{ emp.id }}">{{ emp.full_name }}</option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <p class="text-danger">No employees available. Please add employees first.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="salary" class="form-label">Salary</label>
+                        <input type="text" name="salary" id="salary" class="form-control" readonly>
+                    </div>
+                </div>
+
+                <!-- Tax Details -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="income_tax" class="form-label">Income Tax</label>
+                        <input type="number" step="0.01" name="income_tax" id="income_tax" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="social_security" class="form-label">Social Security</label>
+                        <textarea name="social_security" id="social_security" class="form-control" rows="2" required></textarea>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="other_taxes" class="form-label">Other Taxes</label>
+                        <input type="number" step="0.01" name="other_taxes" id="other_taxes" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="all_taxes" class="form-label">All Taxes</label>
+                        <input type="number" step="0.01" name="all_taxes" id="all_taxes" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="d-flex justify-content">
+            <button type="submit" class="btn btn-primary">Edit Tax</button>
+            <a href="{% url 'tax_management_list' %}" class="btn btn-secondary ms-3">Cancel</a>
+        </div>
+    </form>
+
+    <script src="{% static 'js/calculate_tax.js' %}"></script>
+    <script src="{% static 'js/fetch_employee_salary.js' %}"></script>
+</div>
+{% endblock %}

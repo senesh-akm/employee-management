@@ -94,3 +94,59 @@ def payroll_generation_list(request):
 def tax_management_list(request):
     tax_management = TaxManagement.objects.all()
     return render(request, "tax_management/tax_management_list.html", {"tax_management": tax_management})
+
+
+def add_tax_management(request):
+    if request.method == "POST":
+        employee_id = request.POST.get("employee")
+        income_tax = request.POST.get("income_tax")
+        social_security = request.POST.get("social_security")
+        other_taxes = request.POST.get("other_taxes")
+
+        employee = get_object_or_404(Employee, pk=employee_id)
+
+        TaxManagement.objects.create(
+            employee=employee,
+            income_tax=income_tax,
+            social_security=social_security,
+            other_taxes=other_taxes,
+        )
+        return redirect("tax_management_list")
+
+    employees = Employee.objects.all()
+    return render(request, "tax_management/add_tax_management.html", {"employees": employees})
+
+
+def get_salary(request, employee_id):
+    try:
+        employee = Employee.objects.get(pk=employee_id)
+        salary = {
+            "salary": employee.salary,
+        }
+        return JsonResponse({"success": True, "salary": salary})
+    except Employee.DoesNotExist:
+        return JsonResponse({"success": False, "error": "Employee not found"})
+
+
+def tax_details(request, pk):
+    tax_management = get_object_or_404(SalaryProcessing, pk=pk)
+    employees = Employee.objects.all()
+
+    if request.method == "POST":
+        employee_id = request.POST.get("employee")
+        income_tax = request.POST.get("income_tax")
+        social_security = request.POST.get("social_security")
+        other_taxes = request.POST.get("other_taxes")
+
+        tax_management.employee = get_object_or_404(Employee, pk=employee_id)
+        tax_management.income_tax = income_tax
+        tax_management.social_security = social_security
+        tax_management.other_taxes = other_taxes
+        tax_management.save()
+
+        return redirect("tax_management")
+
+    return render(request, "tax_management/tax_details.html", {
+        "tax_management": tax_management,
+        "employees": employees,
+    })
