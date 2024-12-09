@@ -7,13 +7,12 @@
 {% block content %}
     <h2>Tax Management List</h2>
 
-    <!-- <a type="button" href="{% url 'add_employee' %}" class="btn btn-primary btn-sm mt-4 mb-3 float-end">+ Add Employee</a> -->
+    <a type="button" href="{% url 'add_tax_management' %}" class="btn btn-primary btn-sm mt-4 mb-3 float-end">+ Add Tax</a>
     
     <table class="table striped table-hover align-middle">
         <thead>
             <tr>
-                <th style="width: 60%;">Employee</th>
-                <th style="width: 20%;">Salary Processing</th>
+                <th style="width: 80%;">Employee</th>
                 <th style="width: 20%;">Actions</th>
             </tr>
         </thead>
@@ -21,14 +20,13 @@
             {% for tm in tax_management %}
             <tr>
                 <td>{{ tm.employee.full_name }}</td>
-                <td>{{ tm.income_tax }}</td>
                 <td>
-                    <!-- <a type="button" href="{% url 'employee_details' employee.id %}" class="btn btn-warning btn-sm float-end">View</a> -->
+                    <a type="button" href="{% url 'tax_details' tm.id %}" class="btn btn-warning btn-sm float-end">View</a>
                 </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="4" class="text-center">No tax management records found.</td>
+                <td colspan="2" class="text-center">No tax management records found.</td>
             </tr>
             {% endfor %}
         </tbody>

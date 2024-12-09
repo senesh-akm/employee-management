@@ -29,9 +29,9 @@ class PayrollGeneration(models.Model):
 """Tax Management"""
 class TaxManagement(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="taxes")
-    income_tax = models.IntegerField()
+    income_tax = models.DecimalField(max_digits=3, decimal_places=2)
     social_security = models.TextField()
-    other_taxes = models.IntegerField()
+    other_taxes = models.DecimalField(max_digits=3, decimal_places=2)
 
     def __str__(self):
         return f"Tax Management - {self.employee.full_name}"

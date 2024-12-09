@@ -11,5 +11,7 @@ urlpatterns = [
     # path("payroll/add/", views.add_payroll, name="add_payroll"),
 
     path("tax-management/", views.tax_management_list, name="tax_management_list"),
-    # path("tax-management/add/", views.add_tax_management, name="add_tax_management"),
+    path("tax-management/add/", views.add_tax_management, name="add_tax_management"),
+    path("tax-management/<int:pk>/", views.tax_details, name='tax_details'),
+    path("tax-management/salary/<int:employee_id>/", views.get_salary, name="get_salary"),
 ]
