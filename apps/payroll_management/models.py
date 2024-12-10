@@ -1,5 +1,5 @@
 from django.db import models
-from emp_management.models import Employee
+from apps.emp_management.models import Employee
 
 """Salary Processing"""
 class SalaryProcessing(models.Model):

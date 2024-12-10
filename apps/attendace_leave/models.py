@@ -1,5 +1,5 @@
 from django.db import models
-from emp_management.models import Employee
+from apps.emp_management.models import Employee
 
 """Employee Attendance"""
 class Attendance(models.Model):
@@ -44,3 +44,7 @@ class Leave(models.Model):
 
     def __str__(self):
         return f"{self.employee.full_name} - {self.leave_type} ({self.from_date} to {self.to_date})"
+    
+
+    class Meta:
+        app_label = 'emp_management'

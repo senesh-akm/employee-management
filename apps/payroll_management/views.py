@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import SalaryProcessing, PayrollGeneration, TaxManagement
-from emp_management.models import Employee
+from apps.emp_management.models import Employee
 from django.http import JsonResponse
 import logging
 
