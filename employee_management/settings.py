@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
-    'emp_management',
+    'apps.emp_management',
     'apps.attendace_leave',
     'payroll_management',
 ]

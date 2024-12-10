@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Attendance, Leave
-from emp_management.models import Employee
+from apps.emp_management.models import Employee
 
 def attendance_list(request):
     attendances = Attendance.objects.all()
