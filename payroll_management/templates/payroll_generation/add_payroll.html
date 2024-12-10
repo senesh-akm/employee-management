@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Payroll
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Add Payroll</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <!-- Employee Dropdown -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="employee" class="form-label">Employee</label>
+                        {% if employees.exists %}
+                            <select name="employee" id="employee" class="form-control">
+                                <option value="" disabled selected>Select an Employee</option>
+                                {% for emp in employees %}
+                                    <option value="{{ emp.id }}">{{ emp.full_name }}</option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <p class="text-danger">No employees available. Please add employees first.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" name="title" id="title" class="form-control" value="{{ employee.title }}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="full_name" class="form-label">Name</label>
+                        <input type="text" name="full_name" id="full_name" class="form-control" value="{{ employee.full_name }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Professional Information -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="job_number" class="form-label">Job Number</label>
+                        <input type="text" name="job_number" id="job_number" class="form-control" value="{{ employee.job_number }}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="department" class="form-label">Department</label>
+                        <input type="text" name="department" id="department" class="form-control" value="{{ employee.department }}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="designation" class="form-label">Designation</label>
+                        <input type="text" name="designation" id="designation" class="form-control" value="{{ employee.designation }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Salary Processing Dropdown -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="salary_processing" class="form-label">Salary Processing</label>
+                        {% if salary_processings.exists %}
+                            <select name="salary_processing" id="salary_processing" class="form-control">
+                                <option value="" disabled selected>Select Salary Processing</option>
+                                {% for sp in salary_processings %}
+                                    <option value="{{ sp.id }}">
+                                        {{ sp.employee.full_name }} - {{ sp.salary }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <p class="text-danger">No salary processing records available. Please add records first.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Salary Information -->
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label for="salary" class="form-label">Salary</label>
+                        <input type="text" name="salary" id="salary" class="form-control" value="{{ employee.salary }}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="taxes" class="form-label">Taxes (%)</label>
+                        <input type="text" name="taxes" id="taxes" class="form-control" value="{{ employee.taxes }}" readonly>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <label for="no_pay" class="form-label">No Pay</label>
+                        <input type="text" name="no_pay" id="no_pay" class="form-control" value="{{ employee.no_pay }}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="days" class="form-label">Days</label>
+                        <input type="text" name="days" id="days" class="form-control" value="{{ employee.days }}" readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="payment" class="form-label">Payment</label>
+                        <input type="text" name="payment" id="payment" class="form-control" value="{{ employee.payment }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Issued Status -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="issued" class="form-label">Issued</label>
+                        <select name="issued" id="issued" class="form-control">
+                            <option value="True">Issued</option>
+                            <option value="False" selected>Not Issued</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="d-flex justify-content mb-5">
+            <button type="submit" class="btn btn-primary">Add Payroll</button>
+            <a href="{% url 'payroll_generation_list' %}" class="btn btn-secondary ms-3">Cancel</a>
+        </div>
+
+        <script src="{% static 'js/fetch_salary_pay.js' %}"></script>
+        <script src="{% static 'js/fetch_employee_pr_info.js' %}"></script>
+    </form>
+</div>
+{% endblock %}
