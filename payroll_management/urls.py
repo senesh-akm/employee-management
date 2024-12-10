@@ -7,8 +7,10 @@ urlpatterns = [
     path("salary-processing/<int:pk>/", views.salary_details, name='salary_details'),
     path("salary-processing/bank-details/<int:employee_id>/", views.get_bank_details, name="get_bank_details"),
 
-    path("payroll/", views.payroll_generation_list, name="payroll_list"),
-    # path("payroll/add/", views.add_payroll, name="add_payroll"),
+    path("payroll/", views.payroll_generation_list, name="payroll_generation_list"),
+    path("payroll/add/", views.add_payroll, name="add_payroll"),
+    path("payroll/sp/<int:employee_id>", views.get_salary_proccessing, name="get_salary_proccessing"),
+    path("payroll/professional/<int:employee_id>/", views.fetch_employee_professional_info, name="fetch_employee_professional_info"),
 
     path("tax-management/", views.tax_management_list, name="tax_management_list"),
     path("tax-management/add/", views.add_tax_management, name="add_tax_management"),
