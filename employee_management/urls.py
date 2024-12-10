@@ -22,4 +22,5 @@ urlpatterns = [
     path('employee/', include('apps.emp_management.urls')),
     path('', include('apps.attendace_leave.urls')),
     path('', include('apps.payroll_management.urls')),
+    path('', include('apps.performance_management.urls')),
 ]
