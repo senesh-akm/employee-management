@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
-    'emp_management',
-    'attendace_leave',
-    'payroll_management',
+    'apps.attendace_leave',
+    'apps.emp_management',
+    'apps.payroll_management',
 ]
 
 MIDDLEWARE = [
