@@ -61,9 +61,59 @@ def review_details(request, review_id):
         })
 
 
-def goal_settings(request):
+def goal_settings_list(request):
     goals = GoalSetting.objects.all()
-    return render(request, "performance_management/goal_settings.html", {"goals": goals})
+    return render(request, "goal_settings/goal_setting_list.html", {"goals": goals})
+
+
+def add_goal_setting(request):
+    if request.method == "POST":
+        employee_id = request.POST.get("employee")
+        goals = request.POST.get("goals")
+
+        try:
+            employee = get_object_or_404(Employee, pk=employee_id)
+            GoalSetting.objects.create(
+                employee=employee,
+                goals=goals,
+            )
+            return redirect("goal_setting_list")
+        except Employee.DoesNotExist:
+            return render(request, "goal_settings/add_goal_setting.html", {
+                "error_message": "Invalid employee selected. Please try again.",
+                "employees": Employee.objects.all()
+            })
+    else:
+        employees = Employee.objects.all()
+        return render(request, "goal_settings/add_goal_setting.html", {"employees": employees})
+
+
+def goal_setting_details(request, goal_id):
+    goal = get_object_or_404(GoalSetting, pk=goal_id)
+
+    if request.method == "POST":
+        employee_id = request.POST.get("employee")
+        goals = request.POST.get("goals")
+
+        try:
+            employee = get_object_or_404(Employee, pk=employee_id)
+            goal.employee = employee
+            goal.goals = goals
+            goal.save()
+
+            return redirect("goal_setting_list")
+        except Employee.DoesNotExist:
+            return render(request, "goal_settings/goal_setting_details.html", {
+                "error_message": "Invalid employee selected. Please try again.",
+                "employees": Employee.objects.all(),
+                "goal": goal,
+            })
+    else:
+        employees = Employee.objects.all()
+        return render(request, "goal_settings/goal_setting_details.html", {
+            "employees": employees,
+            "goal": goal,
+        })
 
 
 def feedback_mechanism(request):

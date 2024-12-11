@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Goal Setting
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add Goal Setting</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3 p-2">
+                    <div class="col-md-4">
+                        <label for="employee" class="form-label">Employee</label>
+                        {% if employees.exists %}
+                            <select name="employee" id="employee" class="form-control">
+                                <option value="" disabled selected>Select an Employee</option>
+                                {% for emp in employees %}
+                                <option value="{{ emp.id }}">{{ emp.full_name }}</option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <p class="text-danger">No employees available. Please add employees first.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row mb-3 p-2">
+                    <label for="goals" class="form-label">Employee Goal</label>
+                    <textarea name="goals" id="goals" class="form-control" rows="5"></textarea>
+                </div>
+            </div>   
+        </div>
+    
+        <!-- Submit and Cancel Buttons -->
+        <div class="d-flex justify-content mt-4 mb-5">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'goal_setting_list' %}" class="btn btn-secondary ms-3">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
