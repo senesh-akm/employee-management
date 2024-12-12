@@ -116,6 +116,56 @@ def goal_setting_details(request, goal_id):
         })
 
 
-def feedback_mechanism(request):
+def feedback_list(request):
     feedbacks = FeedbackMechanism.objects.all()
-    return render(request, "performance_management/feedback_mechanism.html", {"feedbacks": feedbacks})
+    return render(request, "feedback_mechanism/feedback_list.html", {"feedbacks": feedbacks})
+
+
+def add_feedback(request):
+    if request.method == "POST":
+        employee_id = request.POST.get("employee")
+        feedback = request.POST.get("feedback")
+
+        try:
+            employee = get_object_or_404(Employee, pk=employee_id)
+            FeedbackMechanism.objects.create(
+                employee=employee,
+                feedback=feedback,
+            )
+            return redirect("feedback_list")
+        except Employee.DoesNotExist:
+            return render(request, "feedback_mechanism/add_feedback.html", {
+                "error_message": "Invalid employee selected. Please try again.",
+                "employees": Employee.objects.all()
+            })
+    else:
+        employees = Employee.objects.all()
+        return render(request, "feedback_mechanism/add_feedback.html", {"employees": employees})
+
+
+def feedback_details(request, feedback_id):
+    fb = get_object_or_404(FeedbackMechanism, pk=feedback_id)
+
+    if request.method == "POST":
+        employee_id = request.POST.get("employee")
+        feedback = request.POST.get("feedback")
+
+        try:
+            employee = get_object_or_404(Employee, pk=employee_id)
+            fb.employee = employee
+            fb.feedback = feedback
+            fb.save()
+
+            return redirect("feedback_list")
+        except Employee.DoesNotExist:
+            return render(request, "feedback_mechanism/feedback_details.html", {
+                "error_message": "Invalid employee selected. Please try again.",
+                "employees": Employee.objects.all(),
+                "fb": fb,
+            })
+    else:
+        employees = Employee.objects.all()
+        return render(request, "feedback_mechanism/feedback_details.html", {
+            "employees": employees,
+            "fb": fb,
+        })

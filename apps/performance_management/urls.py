@@ -10,5 +10,7 @@ urlpatterns = [
     path("goals/add/", views.add_goal_setting, name="add_goal_setting"),
     path("goals/edit/<int:goal_id>/", views.goal_setting_details, name="goal_setting_details"),
 
-    path("feedbacks/", views.feedback_mechanism, name="feedback_mechanism"),
+    path("feedbacks/", views.feedback_list, name="feedback_list"),
+    path("feedbacks/add/", views.add_feedback, name="add_feedback"),
+    path("feedbacks/edit/<int:feedback_id>/", views.feedback_details, name="feedback_details"),
 ]
