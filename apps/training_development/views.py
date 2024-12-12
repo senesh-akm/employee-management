@@ -63,3 +63,58 @@ def need_details(request, training_need_id):
         "employees": employees,
         "training_need": training_need,
     })
+
+
+def training_plans_list(request):
+    tarining_plans = TrainingPlan.objects.all()
+    return render(request, "training_plans/training_plans_list.html", {"tarining_plans": tarining_plans})
+
+
+def add_training_plan(request):
+    if request.method == "POST":
+        employee_id = request.POST.get("employee")
+        plan = request.POST.get("plan")
+
+        try:
+            employee = get_object_or_404(Employee, pk=employee_id)
+            TrainingPlan.objects.create(
+                employee=employee,
+                plan=plan,
+            )
+            return redirect("training_plans_list")
+        except Employee.DoesNotExist:
+            return render(request, "training_plans/add_training_plan.html", {
+                "error_message": "Invalid employee selected. Please try again.",
+                "employees": Employee.objects.all()
+            })
+    else:
+        employees = Employee.objects.all()
+        return render(request, "training_plans/add_training_plan.html", {"employees": employees})
+    
+
+def training_plan_view(request, plan_id):
+    pln = get_object_or_404(TrainingPlan, pk=plan_id)
+
+    if request.method == "POST":
+        employee_id = request.POST.get("employee")
+        plan = request.POST.get("plan")
+
+        try:
+            employee = get_object_or_404(Employee, pk=employee_id)
+            pln.employee = employee
+            pln.plan = plan
+            pln.save()
+
+            return redirect("training_plans_list")
+        except Employee.DoesNotExist:
+            return render(request, "training_plans/training_plan_view.html", {
+                "error_message": "Invalid employee selected. Please try again.",
+                "employees": Employee.objects.all(),
+                "plan": pln,
+            })
+    else:
+        employees = Employee.objects.all()
+        return render(request, "training_plans/training_plan_view.html", {
+            "employees": employees,
+            "plan": pln,
+        })
