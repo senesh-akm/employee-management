@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Feedback Mechanism List
+{% endblock %}
+
+{% block content %}
+    <h2>Feedback Mechanism List</h2>
+
+    <a type="button" href="{% url 'add_feedback' %}" class="btn btn-primary btn-sm mt-4 mb-3 float-end">+ Add Feedback</a>
+    
+    <table class="table striped table-hover align-middle">
+        <thead>
+            <tr>
+                <th style="width: 80%;">Employee</th>
+                <th style="width: 20%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fb in feedbacks %}
+            <tr>
+                <td>{{ fb.employee.full_name }}</td>
+                <td>
+                    <a type="button" href="{% url 'feedback_details' fb.id %}" class="btn btn-warning btn-sm float-end">View</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" class="text-center">No performance feedback found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
