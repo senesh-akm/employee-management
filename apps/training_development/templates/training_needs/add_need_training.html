@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Training Needs
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add Training Needs</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3 p-2">
+                    <div class="col-md-4">
+                        <label for="employee" class="form-label">Employee</label>
+                        {% if employees.exists %}
+                            <select name="employee" id="employee" class="form-control" required>
+                                <option value="" disabled selected>Select an Employee</option>
+                                {% for emp in employees %}
+                                <option value="{{ emp.id }}">{{ emp.full_name }}</option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <p class="text-danger">No employees available. Please add employees first.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row mb-3 p-2">
+                    <div class="col-md-6">
+                        <label for="designation" class="form-label">Designation</label>
+                        <input type="text" name="designation" id="designation" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="duration" class="form-label">Duration</label>
+                        <select name="duration" id="duration" class="form-control" required>
+                            <option value="" disabled selected>Select Duration</option>
+                            <option value="1 month">1 month</option>
+                            <option value="2 months">2 months</option>
+                            <option value="3 months">3 months</option>
+                            <option value="6 months">6 months</option>
+                            <option value="over 6 months">Over 6 months</option>
+                        </select>
+                    </div>
+                </div>
+            </div>   
+        </div>
+    
+        <!-- Submit and Cancel Buttons -->
+        <div class="d-flex justify-content mt-4 mb-5">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'need_trainings_list' %}" class="btn btn-secondary ms-3">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
