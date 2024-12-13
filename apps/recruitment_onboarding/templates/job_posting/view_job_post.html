@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Job Post
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Edit Job Post</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <!-- Job Title -->
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="title" class="form-label">Job Title</label>
+                        <input type="text" name="title" id="title" class="form-control" value="{{ job_post.title }}" required>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea name="description" id="description" class="form-control" rows="3" required>{{ job_post.description }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Responsibilities -->
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="responsibilities" class="form-label">Responsibilities</label>
+                        <textarea name="responsibilities" id="responsibilities" class="form-control" rows="5" required>{{ job_post.responsibilities }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Requirements -->
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="requirements" class="form-label">Requirements</label>
+                        <textarea name="requirements" id="requirements" class="form-control" rows="5" required>{{ job_post.requirements }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Work Type -->
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="work_type" class="form-label">Work Type</label>
+                        <select name="work_type" id="work_type" class="form-control" required>
+                            <option value="On-site" {% if job_post.work_type == "On-site" %}selected{% endif %}>On-site</option>
+                            <option value="Hybrid" {% if job_post.work_type == "Hybrid" %}selected{% endif %}>Hybrid</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Employee Type -->
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="employee_type" class="form-label">Employee Type</label>
+                        <select name="employee_type" id="employee_type" class="form-control" required>
+                            <option value="Part time" {% if job_post.employee_type == "Part time" %}selected{% endif %}>Part time</option>
+                            <option value="Full time" {% if job_post.employee_type == "Full time" %}selected{% endif %}>Full time</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Offers -->
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="offers" class="form-label">Our Offers</label>
+                        <textarea name="offers" id="offers" class="form-control" rows="3" required>{{ job_post.offers }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="d-flex justify-content mt-5 mb-5">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'job_posts_list' %}" class="btn btn-secondary ms-3">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

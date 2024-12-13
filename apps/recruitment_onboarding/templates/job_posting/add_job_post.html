@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Job Post
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add Job Post</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3 p-2">
+                    <div class="col-md-12">
+                        <label for="title" class="form-label">Job Title</label>
+                        <input type="text" name="title" id="title" class="form-control" required>
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-12">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea name="description" id="description" class="form-control" rows="5" required></textarea>
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-12">
+                        <label for="responsibilities" class="form-label">Responsibilities</label>
+                        <textarea name="responsibilities" id="responsibilities" class="form-control" rows="5" required></textarea>
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-12">
+                        <label for="requirements" class="form-label">Requirements</label>
+                        <textarea name="requirements" id="requirements" class="form-control" rows="10" required></textarea>
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-12">
+                        <label for="work_type" class="form-label">Work Type</label>
+                        <select name="work_type" id="work_type" class="form-control" required>
+                            <option value="" disabled selected>Select Work Type</option>
+                            <option value="On-site">On-site</option>
+                            <option value="Hybrid">Hybrid</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-12">
+                        <label for="employee_type" class="form-label">Employee Type</label>
+                        <select name="employee_type" id="employee_type" class="form-control" required>
+                            <option value="" disabled selected>Select Employee Type</option>
+                            <option value="Part-time">Part-time</option>
+                            <option value="Full-time">Full-time</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3 p-2">
+                    <div class="col-md-12">
+                        <label for="offers" class="form-label">Our Offers</label>
+                        <textarea name="offers" id="offers" class="form-control" rows="5" required></textarea>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    
+        <div class="d-flex justify-content mt-4 mb-5">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'training_plans_list' %}" class="btn btn-secondary ms-3">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
