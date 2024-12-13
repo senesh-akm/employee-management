@@ -11,6 +11,7 @@ urlpatterns = [
     path("training-plans/add/", views.add_training_plan, name="add_training_plan"),
     path("training-plans/edit/<int:plan_id>", views.training_plan_view, name="training_plan_view"),
 
-    # path("training-records/", views.training_record_list, name="training_record_list"),
-    # path("training-records/add/", views.add_training_record, name="add_training_record"),
+    path("training-records/", views.training_record_list, name="training_record_list"),
+    path("training-records/add/", views.add_training_record, name="add_training_record"),
+    path("training-records/edit/<int:record_id>", views.training_record_details, name="training_record_details"),
 ]
