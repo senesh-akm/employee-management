@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Update Training Plan
+{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Update Training Plan</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3 p-2">
+                    <div class="col-md-4">
+                        <label for="employee" class="form-label">Employee</label>
+                        {% if employees.exists %}
+                            <select name="employee" id="employee" class="form-control" required>
+                                <option value="" disabled>Select an Employee</option>
+                                {% for emp in employees %}
+                                <option value="{{ emp.id }}" {% if plan.employee.id == emp.id %}selected{% endif %}>
+                                    {{ emp.full_name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <p class="text-danger">No employees available. Please add employees first.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row mb-3 p-2">
+                    <label for="plan" class="form-label">Training Plan</label>
+                    <textarea name="plan" id="plan" class="form-control" rows="20">{{ plan.plan }}</textarea>
+                </div>
+            </div>   
+        </div>
+    
+        <!-- Submit and Cancel Buttons -->
+        <div class="d-flex justify-content mt-4 mb-5">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'training_plans_list' %}" class="btn btn-secondary ms-3">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
