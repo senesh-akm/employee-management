@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Training Record
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add Training Record</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="employee" class="form-label">Employee</label>
+                        <select name="employee" id="employee" class="form-control" required>
+                            <option value="" disabled selected>Select an Employee</option>
+                            {% for emp in employees %}
+                            <option value="{{ emp.id }}">{{ emp.full_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="month" class="form-label">Month</label>
+                        <select name="month" id="month" class="form-control" required>
+                            <option value="" disabled selected>Select Month</option>
+                            {% for i in months %}
+                            <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="training_record" class="form-label">Training Record</label>
+                        <select name="training_record" id="training_record" class="form-control" required>
+                            <option value="" disabled selected>Select Training Record</option>
+                            {% for i in training_records %}
+                            <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="certificate" class="form-label">Certificate</label>
+                        <select name="certificate" id="certificate" class="form-control">
+                            <option value="True">Complete</option>
+                            <option value="False" selected>Pending</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="d-flex justify-content mb-5">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'training_record_list' %}" class="btn btn-secondary ms-3">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

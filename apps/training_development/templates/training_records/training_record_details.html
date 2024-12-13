@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Update Training Record
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Update Training Record</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="employee" class="form-label">Employee</label>
+                        <select name="employee" id="employee" class="form-control" required>
+                            <option value="" disabled>Select an Employee</option>
+                            {% for emp in employees %}
+                            <option value="{{ emp.id }}" {% if training_record.employee.id == emp.id %}selected{% endif %}>
+                                {{ emp.full_name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="month" class="form-label">Month</label>
+                        <select name="month" id="month" class="form-control" required>
+                            <option value="" disabled>Select Month</option>
+                            {% for i in months %}
+                            <option value="{{ i }}" {% if training_record.month == i|stringformat:"s" %}selected{% endif %}>
+                                {{ i }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="training_record" class="form-label">Training Record</label>
+                        <select name="training_record" id="training_record" class="form-control" required>
+                            <option value="" disabled>Select Training Record</option>
+                            {% for i in training_records %}
+                            <option value="{{ i }}" {% if training_record.training_record == i %}selected{% endif %}>
+                                {{ i }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+    
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea name="description" id="description" class="form-control" rows="4" required>{{ training_record.description }}</textarea>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="certificate" class="form-label">Certificate</label>
+                        <select name="certificate" id="certificate" class="form-control">
+                            <option value="True" {% if training_record.certificate %}selected{% endif %}>Complete</option>
+                            <option value="False" {% if not training_record.certificate %}selected{% endif %}>Pending</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="d-flex justify-content mb-5">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'training_record_list' %}" class="btn btn-secondary ms-3">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -118,3 +118,80 @@ def training_plan_view(request, plan_id):
             "employees": employees,
             "plan": pln,
         })
+
+
+def training_record_list(request):
+    training_records = TrainingRecord.objects.all()
+    return render(request, "training_records/training_record_list.html", {"training_records": training_records})
+
+
+def add_training_record(request):
+    if request.method == "POST":
+        employee_id = request.POST.get("employee")
+        month = request.POST.get("month")
+        training_record = request.POST.get("training_record")
+        description = request.POST.get("description")
+        certificate = request.POST.get("certificate") == "True"
+
+        try:
+            employee = get_object_or_404(Employee, pk=employee_id)
+            TrainingRecord.objects.create(
+                employee=employee,
+                month=month,
+                training_record=training_record,
+                description=description,
+                certificate=certificate,
+            )
+            return redirect("training_record_list")
+        except Employee.DoesNotExist:
+            return render(request, "training_records/add_training_record.html", {
+                "error_message": "Invalid employee selected. Please try again.",
+                "employees": Employee.objects.all(),
+                "months": range(1, 13),
+                "training_records": range(1, 6),
+            })
+    else:
+        employees = Employee.objects.all()
+        return render(request, "training_records/add_training_record.html", {
+            "employees": employees,
+            "months": range(1, 13),
+            "training_records": range(1, 6),
+        })
+    
+
+def training_record_details(request, record_id):
+    training_record = get_object_or_404(TrainingRecord, pk=record_id)
+
+    if request.method == "POST":
+        employee_id = request.POST.get("employee")
+        month = request.POST.get("month")
+        training_record_value = request.POST.get("training_record")
+        description = request.POST.get("description")
+        certificate = request.POST.get("certificate") == "True"
+
+        try:
+            employee = get_object_or_404(Employee, pk=employee_id)
+            training_record.employee = employee
+            training_record.month = month
+            training_record.training_record = training_record_value
+            training_record.description = description
+            training_record.certificate = certificate
+            training_record.save()
+
+            return redirect("training_record_list")
+        except Employee.DoesNotExist:
+            return render(request, "training_records/training_record_details.html", {
+                "error_message": "Invalid employee selected. Please try again.",
+                "employees": Employee.objects.all(),
+                "training_record": training_record,
+                "months": range(1, 13),
+                "training_records": range(1, 6),
+            })
+    else:
+        employees = Employee.objects.all()
+        return render(request, "training_records/training_record_details.html", {
+            "employees": employees,
+            "training_record": training_record,
+            "months": range(1, 13),
+            "training_records": range(1, 6),
+        })
