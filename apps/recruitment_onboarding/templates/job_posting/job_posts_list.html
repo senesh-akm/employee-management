@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Job Posts List
+{% endblock %}
+
+{% block content %}
+    <h2>Job Posts List</h2>
+
+    <a type="button" href="{% url 'add_job_post' %}" class="btn btn-primary btn-sm mt-4 mb-3 float-end">+ Add Plan</a>
+    
+    <table class="table striped table-hover align-middle">
+        <thead>
+            <tr>
+                <th style="width: 30%;">Title</th>
+                <th style="width: 25%;">Work Type</th>
+                <th style="width: 25%;">Employee Type</th>
+                <th style="width: 20%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for job in job_posts %}
+            <tr>
+                <td>{{ job.title }}</td>
+                <td>{{ job.work_type }}</td>
+                <td>{{ job.employee_type }}</td>
+                <td>
+                    <a href="{% url 'view_job_post' job.id %}" class="btn btn-warning btn-sm">View</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No job posts available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
