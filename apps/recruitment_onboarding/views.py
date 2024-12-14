@@ -53,3 +53,64 @@ def view_job_post(request, job_post_id):
         return redirect("job_posts_list")
 
     return render(request, "job_posting/view_job_post.html", {"job_post": job_post})
+
+
+def candidate_screening_list(request):
+    candidate_screenings = CandidateScreening.objects.all()
+    return render(request, "candidate_screening/candidate_screening_list.html", {"candidate_screenings": candidate_screenings})
+
+
+def add_candidate_screening(request):
+    if request.method == "POST":
+        candidate = request.POST.get("candidate")
+        job_position_id = request.POST.get("job_position")
+        members = request.POST.get("members")
+        conduct_interviews = request.POST.get("conduct_interviews")
+
+        # Debugging output
+        print(f"Candidate: {candidate}")
+        print(f"Job Position ID: {job_position_id}")
+
+        if not candidate:
+            return render(request, "candidate_screening/add_candidate_screening.html", {
+                "error_message": "Candidate field is required.",
+                "job_positions": JobPosting.objects.all()
+            })
+
+        job_position = get_object_or_404(JobPosting, pk=job_position_id)
+        CandidateScreening.objects.create(
+            candidate=candidate,
+            job_position=job_position,
+            members=members,
+            conduct_interviews=conduct_interviews
+        )
+        return redirect("candidate_screening_list")
+
+    job_positions = JobPosting.objects.all()
+    return render(request, "candidate_screening/add_candidate_screening.html", {
+        "job_positions": job_positions
+    })
+
+
+def screening_details(request, screening_id):
+    screening = get_object_or_404(CandidateScreening, pk=screening_id)
+
+    if request.method == "POST":
+        candidate = request.POST.get("candidate")
+        job_position_id = request.POST.get("job_position")
+        members = request.POST.get("members")
+        conduct_interviews = request.POST.get("conduct_interviews")
+
+        job_position = get_object_or_404(JobPosting, pk=job_position_id)
+        screening.candidate = candidate
+        screening.job_position = job_position
+        screening.members = members
+        screening.conduct_interviews = conduct_interviews
+        screening.save()
+        return redirect("candidate_screening_list")
+
+    job_positions = JobPosting.objects.all()
+    return render(request, "candidate_screening/screening_details.html", {
+        "screening": screening,
+        "job_positions": job_positions
+    })

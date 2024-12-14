@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Candidate Screening
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add Candidate Screening</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="candidate" class="form-label">Candidate</label>
+                        <input type="text" name="candidate" id="candidate" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="job_position" class="form-label">Job Position</label>
+                        {% if job_positions.exists %}
+                            <select name="job_position" id="job_position" class="form-control" required>
+                                <option value="" disabled selected>Select a Job Position</option>
+                                {% for position in job_positions %}
+                                <option value="{{ position.id }}">{{ position.title }}</option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <p class="text-danger">No job positions available. Please add job positions first.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="members" class="form-label">Members</label>
+                        <textarea name="members" id="members" class="form-control" rows="3" required></textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="conduct_interviews" class="form-label">Conduct Interviews</label>
+                        <input type="text" name="conduct_interviews" id="conduct_interviews" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content mt-4 mb-5">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'candidate_screening_list' %}" class="btn btn-secondary ms-3">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
