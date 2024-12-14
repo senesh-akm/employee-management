@@ -25,4 +25,5 @@ urlpatterns = [
     path('', include('apps.performance_management.urls')),
     path('', include('apps.training_development.urls')),
     path('', include('apps.recruitment_onboarding.urls')),
+    path('', include('apps.exit_managment.urls')),
 ]
