@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Onboarding Process List
+{% endblock %}
+
+{% block content %}
+    <h2>Onboarding Process List</h2>
+
+    <a type="button" href="{% url 'add_onboarding' %}" class="btn btn-primary btn-sm mt-4 mb-3 float-end">+ Add Onboarding Process</a>
+    
+    <table class="table striped table-hover align-middle">
+        <thead>
+            <tr>
+                <th style="width: 35%;">Candidate</th>
+                <th style="width: 25%;">Designation</th>
+                <th style="width: 20%;">Joining Date</th>
+                <th style="width: 20%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for onboarding in onboardings %}
+            <tr>
+                <td>{{ onboarding.candidate.candidate }}</td>
+                <td>{{ onboarding.designation }}</td>
+                <td>{{ onboarding.joining_date }}</td>
+                <td>
+                    <a href="{% url 'onboarding_details' onboarding.id %}" class="btn btn-warning btn-sm">View</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No onboarding processs found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

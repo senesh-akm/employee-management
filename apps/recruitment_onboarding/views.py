@@ -114,3 +114,59 @@ def screening_details(request, screening_id):
         "screening": screening,
         "job_positions": job_positions
     })
+
+
+def onboarding_list(request):
+    onboardings = OnboardingProcess.objects.all()
+    return render(request, "onboarding_process/onboarding_list.html", {"onboardings": onboardings})
+
+
+def add_onboarding(request):
+    if request.method == "POST":
+        candidate_id = request.POST.get("candidate")
+        designation = request.POST.get("designation")
+        joining_date = request.POST.get("joining_date")
+        offer_letter = request.POST.get("offer_letter")
+
+        # Ensure candidate exists and retrieve designation from candidate's job position
+        candidate = get_object_or_404(CandidateScreening, pk=candidate_id)
+        if not designation:  # If designation is not provided, default to the candidate's job position
+            designation = candidate.job_position.title  # Use the job position's title for designation
+        
+        # Create the onboarding process
+        OnboardingProcess.objects.create(
+            candidate=candidate,
+            designation=designation,
+            joining_date=joining_date,
+            offer_letter=offer_letter,
+        )
+        return redirect("onboarding_list")
+
+    candidates = CandidateScreening.objects.all()
+    return render(request, "onboarding_process/add_onboarding.html", {
+        "candidates": candidates,
+    })
+
+
+def onboarding_details(request, onboarding_id):
+    onboarding = get_object_or_404(OnboardingProcess, pk=onboarding_id)
+
+    if request.method == "POST":
+        candidate_id = request.POST.get("candidate")
+        designation = request.POST.get("designation")
+        joining_date = request.POST.get("joining_date")
+        offer_letter = request.POST.get("offer_letter")
+
+        candidate = get_object_or_404(CandidateScreening, pk=candidate_id)
+        onboarding.candidate = candidate
+        onboarding.designation = designation
+        onboarding.joining_date = joining_date
+        onboarding.offer_letter = offer_letter
+        onboarding.save()
+        return redirect("onboarding_list")
+
+    candidates = CandidateScreening.objects.all()
+    return render(request, "onboarding_process/onboarding_details.html", {
+        "onboarding": onboarding,
+        "candidates": candidates,
+    })
