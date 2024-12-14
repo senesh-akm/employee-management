@@ -84,7 +84,7 @@ def add_candidate_screening(request):
             members=members,
             conduct_interviews=conduct_interviews
         )
-        return redirect("onboarding_list")
+        return redirect("candidate_screening_list")
 
     job_positions = JobPosting.objects.all()
     return render(request, "candidate_screening/add_candidate_screening.html", {
@@ -107,7 +107,7 @@ def screening_details(request, screening_id):
         screening.members = members
         screening.conduct_interviews = conduct_interviews
         screening.save()
-        return redirect("onboarding_list")
+        return redirect("candidate_screening_list")
 
     job_positions = JobPosting.objects.all()
     return render(request, "candidate_screening/screening_details.html", {
