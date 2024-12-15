@@ -49,3 +49,31 @@ def edit_exit_interview(request, interview_id):
         "employees": employees,
         "interview": interview,
     })
+
+
+def final_settlement_list(request):
+    final_settlements = FinalSettlement.objects.all()
+    return render(request, "final_settlement/final_settlement_list.html", {"final_settlements": final_settlements})
+
+
+def add_final_settlement(request):
+    if request.method == "POST":
+        employee_id = request.POST.get("employee")
+        settlement_clearance = request.POST.get("settlement_clearance")
+        employee = get_object_or_404(Employee, pk=employee_id)
+        FinalSettlement.objects.create(employee=employee, settlement_clearance=settlement_clearance)
+        return redirect("final_settlement_list")
+
+    employees = Employee.objects.all()
+    return render(request, "final_settlement/add_final_settlement.html", {"employees": employees})
+
+
+def edit_final_settlement(request, settlement_id):
+    settlement = get_object_or_404(FinalSettlement, pk=settlement_id)
+
+    if request.method == "POST":
+        settlement.settlement_clearance = request.POST.get("settlement_clearance")
+        settlement.save()
+        return redirect("final_settlement_list")
+
+    return render(request, "final_settlement/edit_final_settlement.html", {"settlement": settlement})

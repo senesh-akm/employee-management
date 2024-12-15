@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Final Settlement
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Edit Final Settlement</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="employee" class="form-label">Employee</label>
+                        <select name="employee" id="employee" class="form-control" required disabled>
+                            <option value="{{ settlement.employee.id }}" selected>{{ settlement.employee.full_name }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="settlement_clearance" class="form-label">Settlement Clearance</label>
+                        <textarea name="settlement_clearance" id="settlement_clearance" class="form-control" rows="4" required>{{ settlement.settlement_clearance }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content mt-4 mb-5">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'final_settlement_list' %}" class="btn btn-secondary ms-3">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
