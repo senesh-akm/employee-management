@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Record Keeping List
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Record Keeping List</h2>
+
+    <a type="button" href="{% url 'add_record_keeping' %}" class="btn btn-primary btn-sm mt-4 mb-3 float-end">+ Add Record</a>
+
+    <table class="table striped table-hover align-middle">
+        <thead>
+            <tr>
+                <th style="width: 60%;">Employee</th>
+                <th style="width: 40%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in record_keeping %}
+            <tr>
+                <td>{{ record.employee.full_name }}</td>
+                <td>
+                    <a href="{% url 'edit_record_keeping' record.id %}" class="btn btn-warning btn-sm">View</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" class="text-center">No records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

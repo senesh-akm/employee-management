@@ -10,6 +10,7 @@ urlpatterns = [
     path("final-settlements/add/", views.add_final_settlement, name="add_final_settlement"),
     path("final-settlements/edit/<int:settlement_id>/", views.edit_final_settlement, name="edit_final_settlement"),
 
-    # path("record-keeping/", views.record_keeping_list, name="record_keeping_list"),
-    # path("record-keeping/add/", views.add_record_keeping, name="add_record_keeping"),
+    path("record-keeping/", views.record_keeping_list, name="record_keeping_list"),
+    path("record-keeping/add/", views.add_record_keeping, name="add_record_keeping"),
+    path("record-keeping/edit/<int:record_id>/", views.edit_record_keeping, name="edit_record_keeping"),
 ]

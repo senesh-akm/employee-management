@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Record Keeping
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Edit Record Keeping</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="employee" class="form-label">Employee</label>
+                        <select name="employee" id="employee" class="form-control" required disabled>
+                            <option value="{{ record.employee.id }}" selected>{{ record.employee.full_name }}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="final_records" class="form-label">Final Records</label>
+                        <textarea name="final_records" id="final_records" class="form-control" rows="5" required>{{ record.final_records }}</textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="exit_letter" class="form-label">Exit Letter</label>
+                        <textarea name="exit_letter" id="exit_letter" class="form-control" rows="5" required>{{ record.exit_letter }}</textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="service_letter" class="form-label">Service Letter</label>
+                        <textarea name="service_letter" id="service_letter" class="form-control" rows="5" required>{{ record.service_letter }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content mt-4 mb-5">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'record_keeping_list' %}" class="btn btn-secondary ms-3">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

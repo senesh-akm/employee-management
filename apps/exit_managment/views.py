@@ -77,3 +77,41 @@ def edit_final_settlement(request, settlement_id):
         return redirect("final_settlement_list")
 
     return render(request, "final_settlement/edit_final_settlement.html", {"settlement": settlement})
+
+
+def record_keeping_list(request):
+    record_keeping = RecordKeeping.objects.all()
+    return render(request, "record_keeping/record_keeping_list.html", {"record_keeping": record_keeping})
+
+
+def add_record_keeping(request):
+    if request.method == "POST":
+        employee_id = request.POST.get("employee")
+        final_records = request.POST.get("final_records")
+        exit_letter = request.POST.get("exit_letter")
+        service_letter = request.POST.get("service_letter")
+
+        employee = get_object_or_404(Employee, pk=employee_id)
+        RecordKeeping.objects.create(
+            employee=employee,
+            final_records=final_records,
+            exit_letter=exit_letter,
+            service_letter=service_letter,
+        )
+        return redirect("record_keeping_list")
+
+    employees = Employee.objects.all()
+    return render(request, "record_keeping/add_record_keeping.html", {"employees": employees})
+
+
+def edit_record_keeping(request, record_id):
+    record = get_object_or_404(RecordKeeping, pk=record_id)
+
+    if request.method == "POST":
+        record.final_records = request.POST.get("final_records")
+        record.exit_letter = request.POST.get("exit_letter")
+        record.service_letter = request.POST.get("service_letter")
+        record.save()
+        return redirect("record_keeping_list")
+
+    return render(request, "record_keeping/edit_record_keeping.html", {"record": record})
