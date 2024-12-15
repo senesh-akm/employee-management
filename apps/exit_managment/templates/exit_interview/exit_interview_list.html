@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Exit Interview List
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Exit Interview List</h2>
+
+    <a type="button" href="{% url 'add_exit_interview' %}" class="btn btn-primary btn-sm mt-4 mb-3 float-end">+ Add Exit Interview</a>
+    
+    <table class="table striped table-hover align-middle">
+        <thead>
+            <tr>
+                <th style="width: 55%;">Employee</th>
+                <th style="width: 25%;">Stars</th>
+                <th style="width: 20%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for interview in interviews %}
+            <tr>
+                <td>{{ interview.employee.full_name }}</td>
+                <td>{{ interview.stars }}</td>
+                <td>
+                    <a href="{% url 'edit_exit_interview' interview.id %}" class="btn btn-warning btn-sm">Edit</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center">No exit interviews found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

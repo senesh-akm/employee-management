@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Exit Interview
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add Exit Interview</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="employee" class="form-label">Employee</label>
+                        {% if employees.exists %}
+                            <select name="employee" id="employee" class="form-control" required>
+                                <option value="" disabled selected>Select an Employee</option>
+                                {% for emp in employees %}
+                                <option value="{{ emp.id }}">{{ emp.full_name }}</option>
+                                {% endfor %}
+                            </select>
+                        {% else %}
+                            <p class="text-danger">No employees available. Please add employees first.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="stars" class="form-label">Stars</label>
+                        <input type="number" name="stars" id="stars" class="form-control" min="1" max="5" step="1" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label for="feedback" class="form-label">Feedback</label>
+                        <textarea name="feedback" id="feedback" class="form-control" rows="5" required></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content mt-4 mb-5">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'exit_interview_list' %}" class="btn btn-secondary ms-3">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
