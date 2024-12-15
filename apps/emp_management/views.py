@@ -15,18 +15,19 @@ def add_employee(request):
         workhistory_formset = WorkHistoryFormSet(request.POST, prefix="workhistory")
 
         if form.is_valid() and education_formset.is_valid() and workhistory_formset.is_valid():
-            # Save the Employee instance
             employee = form.save()
 
-            # Save each Education instance linked to this Employee
+            print("Saving education data...")
             for edu_form in education_formset:
+                print(edu_form.cleaned_data)
                 if edu_form.cleaned_data and not edu_form.cleaned_data.get("DELETE"):
                     edu_instance = edu_form.save(commit=False)
                     edu_instance.employee = employee
                     edu_instance.save()
 
-            # Save each Work History instance linked to this Employee
+            print("Saving work history data...")
             for work_form in workhistory_formset:
+                print(work_form.cleaned_data) 
                 if work_form.cleaned_data and not work_form.cleaned_data.get("DELETE"):
                     work_instance = work_form.save(commit=False)
                     work_instance.employee = employee
